@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorEx.Lib", "VectorEx.Lib\VectorEx.Lib.csproj", "{64E8C033-9D93-44AB-9A20-3C640BB658DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorEx.Tests", "VectorEx.Tests\VectorEx.Tests.csproj", "{19406D52-A20F-49D2-8D95-E8FC9DF29F8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64E8C033-9D93-44AB-9A20-3C640BB658DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E8C033-9D93-44AB-9A20-3C640BB658DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E8C033-9D93-44AB-9A20-3C640BB658DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E8C033-9D93-44AB-9A20-3C640BB658DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19406D52-A20F-49D2-8D95-E8FC9DF29F8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19406D52-A20F-49D2-8D95-E8FC9DF29F8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19406D52-A20F-49D2-8D95-E8FC9DF29F8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19406D52-A20F-49D2-8D95-E8FC9DF29F8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F38A1F6-5A68-4F7D-9566-3A26B8ABB432}
+	EndGlobalSection
+EndGlobal
