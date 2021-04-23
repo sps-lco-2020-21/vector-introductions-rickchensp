@@ -20,7 +20,7 @@ namespace VectorEx.Lib
 
         public List<double> Values { get => _values; }
 
-        public double Magnitude { get => Values.Sum(x => x * x); }
+        public double Magnitude { get => Math.Sqrt(Values.Sum(x => x * x)); }
 
         public bool HaveEqualDimensions(Vector v2)
         {
@@ -48,27 +48,27 @@ namespace VectorEx.Lib
                 }
                 return new Vector(_dimension, newVector);
             }
-            throw new Exception();
+            throw new VectorException(1, "Dimensions of the vectors were not equal");
         }
 
         public Vector ScalarMultiply(double multiplier)
         {
             List<double> newValues = Values.Select(x => x * multiplier).ToList();
-            return new Vector(Dimension, Values);
+            return new Vector(Dimension, newValues);
         }
 
         public double Dot(Vector v2)
         {
             if (HaveEqualDimensions(v2))
             {
-                double dotProduct = 1;
+                double dotProduct = 0;
                 for (int i = 0; i < Dimension; ++i)
                 {
                     dotProduct += Values[i] * v2.Values[i];
                 }
                 return dotProduct;
             }
-            throw new Exception();
+            throw new VectorException(1, "Dimensions of the vectors were not equal");
         }
 
         public double GeometricDot(Vector v2)
@@ -93,7 +93,7 @@ namespace VectorEx.Lib
                     return Math.Acos(CosOfAngle) * (180 / Math.PI);
                 return Math.Acos(CosOfAngle);
             }
-            throw new Exception();
+            throw new VectorException(1, "Dimensions of the vectors were not equal");
         }
 
     }
