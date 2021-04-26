@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace VectorEx.Lib
 {
-    public class Vector
+    public class Vector<T> : IEquatable<Vector<T>>
     {
         int _dimension;
-        List<double> _values = new List<double> { };
-        public Vector(int n, List<double> entries)
+        List<T> _values = new List<T> { };
+        public Vector(int n, List<T> entries)
         {
             _dimension = n;
             _values = entries;
@@ -18,11 +18,24 @@ namespace VectorEx.Lib
 
         public int Dimension { get => _dimension; set => _dimension = value; }
 
-        public List<double> Values { get => _values; }
+        public List<T> Values { get => _values; }
 
-        public double Magnitude { get => Math.Sqrt(Values.Sum(x => x * x)); }
+        public double Magnitude
+        {
+            get
+            {
+                double sum = 0;
+                foreach(T value in Values)
+                {
+                    sum += (dynamic)value * value;
+                }
+                return Math.Sqrt(sum);
+            }
 
-        public bool HaveEqualDimensions(Vector v2)
+        }
+        
+
+        public bool HaveEqualDimensions(Vector<T> v2)
         {
             return Dimension == v2.Dimension;
         }
@@ -30,61 +43,61 @@ namespace VectorEx.Lib
         public override string ToString()
         {
             string str = string.Empty;
-            foreach(double entry in Values)
+            foreach(T entry in Values)
             {
                 str += $"{entry}, ";
             }
             return str.Substring(0, str.Length - 2);
         }
 
-        public Vector Add(Vector v2)
+        public Vector<T> Add(Vector<T> v2)
         {
             if (HaveEqualDimensions(v2))
             {
-                List<double> newVector = new List<double> { };
+                List<T> newVector = new List<T> { };
                 for (int i = 0; i < _dimension; ++i)
                 {
-                    newVector.Add(Values[i] + v2.Values[i]);
+                    newVector.Add((dynamic)Values[i] + v2.Values[i]);
                 }
-                return new Vector(_dimension, newVector);
+                return new Vector<T>(_dimension, newVector);
             }
             throw new VectorException(1, "Dimensions of the vectors were not equal");
         }
 
-        public Vector ScalarMultiply(double multiplier)
+        public Vector<T> ScalarMultiply(T multiplier)
         {
-            List<double> newValues = Values.Select(x => x * multiplier).ToList();
-            return new Vector(Dimension, newValues);
+            List<T> newValues = Values.Select(x => (T)((dynamic)x * (dynamic)multiplier)).ToList();
+            return new Vector<T>(Dimension, newValues);
         }
 
-        public double Dot(Vector v2)
+        public double Dot(Vector<T> v2)
         {
             if (HaveEqualDimensions(v2))
             {
                 double dotProduct = 0;
                 for (int i = 0; i < Dimension; ++i)
                 {
-                    dotProduct += Values[i] * v2.Values[i];
+                    dotProduct += (dynamic)Values[i] * v2.Values[i];
                 }
                 return dotProduct;
             }
             throw new VectorException(1, "Dimensions of the vectors were not equal");
         }
 
-        public double GeometricDot(Vector v2)
+        public double GeometricDot(Vector<T> v2)
         {
             return Magnitude * v2.Magnitude * Math.Cos(AngleBetween(v2));
         }
 
-        public Vector ConvexCombination(double a, Vector v2)
+        public Vector<T> ConvexCombination(T a, Vector<T> v2)
         {
-            double b = 1 - a;
-            Vector newV1 = this.ScalarMultiply(a);
-            Vector newV2 = v2.ScalarMultiply(b);
+            T b = (dynamic)1 - a;
+            Vector<T> newV1 = ScalarMultiply(a);
+            Vector<T> newV2 = v2.ScalarMultiply(b);
             return newV1.Add(newV2);
         }
 
-        public double AngleBetween(Vector v2, bool UseDegree = false)
+        public double AngleBetween(Vector<T> v2, bool UseDegree = false)
         {
             if (HaveEqualDimensions(v2))
             {
@@ -93,9 +106,20 @@ namespace VectorEx.Lib
                     return Math.Acos(CosOfAngle) * (180 / Math.PI);
                 return Math.Acos(CosOfAngle);
             }
-            throw new VectorException(1, "Dimensions of the vectors were not equal");
+            throw new VectorException(1, "Dimensions of the Vector<T>s were not equal");
         }
 
+        public bool Equals(Vector<T> other)
+        {
+            for(int i = 0; i < Dimension; ++i)
+            {
+                if((dynamic)Values[i] != other.Values[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
